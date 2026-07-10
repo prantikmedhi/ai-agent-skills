@@ -155,7 +155,9 @@ def detect(prompt: str) -> IntentResult:
 
     # ── Resolve ───────────────────────────────────────────────
     total = code_score + chat_score or 1
-    if code_score >= chat_score:
+    # Tie goes to code only if there's an actual code signal; a bare factual
+    # question ("what's the capital of X") scores 0/0 and must fall to chat.
+    if code_score > chat_score or (code_score > 0 and code_score == chat_score):
         intent = "code"
         confidence = round(code_score / total, 2)
     else:

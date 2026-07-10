@@ -1,5 +1,6 @@
 ---
 name: codebase-security-audit
+triggers: [security audit, vulnerability, vulnerabilities, audit, sql injection, xss, ssrf, csrf, idor, exposed secrets, hardcoded secrets, harden, ddos, denial of service, rate limit, broken access control, insecure, owasp, pentest, secure my, check security, find vulnerabilities]
 description: >-
   Audit a codebase for security vulnerabilities and fix them. Covers injection (SQL,
   command, LDAP, NoSQL), XSS, SSRF, CSRF, IDOR/broken access control, authn/session

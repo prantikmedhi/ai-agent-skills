@@ -1,5 +1,6 @@
 ---
 name: fable5-operating-profile
+triggers: [fable 5, fable5, operating profile, thinking mode, effort router, reasoning effort, prompt injection, agent security, harden agent, emulate fable, system prompt profile]
 description: >-
   Make any model (Claude Opus 4.8, Sonnet, a GPT/Codex model, or any other) behave
   the way Claude Fable 5 does across six dimensions — Thinking (interleaved

@@ -63,7 +63,9 @@ def parse_skill(path: Path) -> Optional[dict]:
     fm = fm_match.group(1)
 
     name_m = re.search(r"^name:\s*(.+)", fm, re.MULTILINE)
-    desc_m = re.search(r"^description:\s*>?\n?((?:[ \t]+.+\n?)+|.+)", fm, re.MULTILINE)
+    # handle YAML block scalars: `>`, `|`, with optional chomp `-`/`+` (e.g. `>-`),
+    # then indented continuation lines; or a plain inline description.
+    desc_m = re.search(r"^description:\s*[>|]?[-+]?[ \t]*\n?((?:[ \t]+.+\n?)+|.+)", fm, re.MULTILINE)
     triggers_m = re.search(r"^triggers:\s*\[(.+?)\]", fm, re.MULTILINE | re.DOTALL)
 
     name = name_m.group(1).strip() if name_m else path.parent.name
@@ -266,14 +268,54 @@ def route(
 
 # ── CLI ────────────────────────────────────────────────────────────────────────
 
+def _selftest() -> None:
+    import tempfile
+    # folded-scalar (`>-`) description must parse to real text, not "-"
+    folded = ('---\nname: sec-audit\n'
+              'triggers: [sql injection, harden, ddos]\n'
+              'description: >-\n'
+              '  Audit a codebase for SQL injection, XSS, and DDoS; harden it.\n'
+              '---\n# body\nFirst paragraph.\n')
+    plain = ('---\nname: plain-skill\n'
+             'description: Convert a PDF into a spreadsheet.\n---\nbody\n')
+    with tempfile.TemporaryDirectory() as d:
+        pa = Path(d) / "sec-audit" ; pa.mkdir()
+        (pa / "SKILL.md").write_text(folded)
+        pb = Path(d) / "plain-skill" ; pb.mkdir()
+        (pb / "SKILL.md").write_text(plain)
+        sa = parse_skill(pa / "SKILL.md")
+        assert sa["description"].startswith("Audit a codebase"), f"folded desc broke: {sa['description']!r}"
+        assert "sql injection" in sa["triggers"], sa["triggers"]
+        sb = parse_skill(pb / "SKILL.md")
+        assert sb["description"] == "Convert a PDF into a spreadsheet.", sb["description"]
+        # trigger hits (+5 each) must lift the security skill high; the winner is a
+        # security-audit skill. (route() also scans real installed dirs, so we assert
+        # on score/category, not that the temp skill is uniquely #1.)
+        res = route("audit my backend for sql injection and harden against ddos", extra_dirs=[d])
+        top = res["candidate_skills"][0]
+        assert top["score"] >= 15, top
+        assert "audit" in top["skill_name"], top
+        assert any(c["skill_name"] == "sec-audit" and c["score"] >= 15
+                   for c in res["candidate_skills"]), res["candidate_skills"]
+        # mode skills are never task candidates
+        assert all(c["skill_name"] not in MODE_SKILLS for c in res["candidate_skills"])
+    print("skill_finder selftest: OK")
+
+
 def main() -> None:
     p = argparse.ArgumentParser(description="Auto Skill Finder")
-    p.add_argument("--prompt", required=True, help="User prompt to route")
+    p.add_argument("--selftest", action="store_true", help="Run self-check and exit")
+    p.add_argument("--prompt", help="User prompt to route")
     p.add_argument("--skills-dir", nargs="+", dest="skills_dir", help="Extra skill dirs")
     p.add_argument("--threshold", type=int, default=4, help="Min score for match (default 4)")
     p.add_argument("--json", action="store_true", help="Output JSON")
     args = p.parse_args()
 
+    if args.selftest:
+        _selftest()
+        return
+    if not args.prompt:
+        p.error("provide --prompt or --selftest")
     result = route(args.prompt, args.skills_dir, args.threshold)
 
     if args.json:

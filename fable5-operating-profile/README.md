@@ -54,7 +54,21 @@ cd ai-agent-skills && ./install.sh --zip
 
 Then upload `dist/fable5-operating-profile.zip` in **Settings → Capabilities → Skills**.
 
-## Use
+## Use — slash commands (no code)
+
+After plugin install in Claude Code:
+
+| Command | Does |
+|---------|------|
+| `/fable5` | Apply the full profile for the rest of the session. |
+| `/fable5-route <request>` | Thinking depth + effort tier + artifact verdict for a request. |
+| `/fable5-guard <text or file>` | allow / confirm / block verdict on untrusted input. |
+| `/fable5-operating-profile` | Invoke the skill directly by name. |
+
+In Claude Desktop / claude.ai the uploaded skill triggers automatically when relevant,
+or on request ("apply the fable5 operating profile").
+
+## Use — advanced
 
 **As a system prompt (any model, no code).** Prepend `fable5_system_prompt.md` to
 whatever model you're driving. That alone gives you all six dimensions.

@@ -41,6 +41,25 @@ Builds `dist/<skill>.zip`, then upload in **Settings → Capabilities → Skills
 Copy any skill folder containing a `SKILL.md` into `~/.claude/skills/` (global) or
 `.claude/skills/` inside a project.
 
+## Use — just type `/`
+
+No code needed. After install, everything is slash-invocable in Claude Code:
+
+| Command | Does |
+|---------|------|
+| `/fable5` | Apply the full Fable 5 operating profile for the rest of the session. |
+| `/fable5-route <request>` | Route a request: thinking depth, effort tier, artifact decision. |
+| `/fable5-guard <text or file>` | Scan input for injection/exfiltration/secrets → allow / confirm / block. |
+| `/auto-skill <prompt>` | Route a prompt to the best installed skill manually. |
+| `/fable5-operating-profile`, `/auto-skill-finder` | Invoke the skills directly by name. |
+
+auto-skill-finder also runs automatically on every prompt via its hooks — no command
+needed at all.
+
+In **Claude Desktop / claude.ai**, upload the zips (`./install.sh --zip`) and the
+skills trigger automatically when relevant, or on request by name ("use the fable5
+operating profile"). Custom slash commands are a Claude Code feature.
+
 ## Repo layout
 
 ```
@@ -48,10 +67,12 @@ Copy any skill folder containing a `SKILL.md` into `~/.claude/skills/` (global) 
 install.sh                           # Claude Code install + Claude Desktop zip builder
 fable5-operating-profile/
 ├── .claude-plugin/plugin.json
+├── commands/                        # /fable5, /fable5-route, /fable5-guard
 ├── README.md
 └── skills/fable5-operating-profile/ # SKILL.md + prompt + scripts + references
 auto-skill-finder/
 ├── .claude-plugin/plugin.json       # hooks: SessionStart + UserPromptSubmit routing
+├── commands/                        # /auto-skill
 ├── README.md
 ├── SKILL.md
 └── skills/                          # ponytail-code, caveman-chat, caveman-code

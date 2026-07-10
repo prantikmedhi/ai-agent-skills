@@ -7,6 +7,7 @@ This repo is also a **Claude Code plugin marketplace** — one command adds ever
 |----------------|--------------|------|
 | [fable5-operating-profile](fable5-operating-profile/) | Run any model with Fable 5's operating profile: interleaved thinking, effort routing, autonomous agency, outcome-first communication, prompt-injection defense, tool discipline. | [README](fable5-operating-profile/README.md) |
 | [auto-skill-finder](auto-skill-finder/) | Universal skill router with dual-mode discipline — ponytail for code, caveman for chat. Auto-routes every prompt to the best installed skill. | [README](auto-skill-finder/README.md) |
+| [codebase-security-audit](codebase-security-audit/) | Find vulnerabilities and fix them at the root cause — injection, access control, secrets, database, DDoS resilience, and more. Recon → scan → triage → fix → verify. | [README](codebase-security-audit/README.md) |
 
 ## Install
 
@@ -16,6 +17,7 @@ This repo is also a **Claude Code plugin marketplace** — one command adds ever
 /plugin marketplace add prantikmedhi/ai-agent-skills
 /plugin install fable5-operating-profile@ai-agent-skills
 /plugin install auto-skill-finder@ai-agent-skills
+/plugin install codebase-security-audit@ai-agent-skills
 ```
 
 ### Claude Code — one-command script
@@ -50,8 +52,9 @@ No code needed. After install, everything is slash-invocable in Claude Code:
 | `/fable5` | Apply the full Fable 5 operating profile for the rest of the session. |
 | `/fable5-route <request>` | Route a request: thinking depth, effort tier, artifact decision. |
 | `/fable5-guard <text or file>` | Scan input for injection/exfiltration/secrets → allow / confirm / block. |
+| `/security-audit <path>` | Audit a codebase for vulnerabilities and fix them (recon → scan → triage → fix → verify). |
 | `/auto-skill <prompt>` | Route a prompt to the best installed skill manually. |
-| `/fable5-operating-profile`, `/auto-skill-finder` | Invoke the skills directly by name. |
+| `/fable5-operating-profile`, `/auto-skill-finder`, `/codebase-security-audit` | Invoke the skills directly by name. |
 
 auto-skill-finder also runs automatically on every prompt via its hooks — no command
 needed at all.
@@ -76,6 +79,11 @@ auto-skill-finder/
 ├── README.md
 ├── SKILL.md
 └── skills/                          # ponytail-code, caveman-chat, caveman-code
+codebase-security-audit/
+├── .claude-plugin/plugin.json
+├── commands/                        # /security-audit
+├── README.md
+└── skills/codebase-security-audit/  # SKILL.md + vuln_catalog.md + vuln_scan.py
 ```
 
 ## License

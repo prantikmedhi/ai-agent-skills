@@ -1,0 +1,13 @@
+{
+  "name": "codebase-security-audit",
+  "version": "1.0.0",
+  "description": "Audit a codebase for vulnerabilities and fix them: injection, broken access control / admin exposure, auth & session weaknesses, secrets, database exposure, PII leakage, XSS, SSRF/CSRF/CORS, deserialization, DoS/resource-exhaustion, weak crypto, and vulnerable dependencies. Recon → scan → triage → fix → verify.",
+  "author": {
+    "name": "Prantik Pratim Medhi",
+    "url": "https://github.com/prantikmedhi"
+  },
+  "homepage": "https://github.com/prantikmedhi/ai-agent-skills",
+  "repository": "https://github.com/prantikmedhi/ai-agent-skills",
+  "license": "MIT",
+  "keywords": ["security", "vulnerability", "audit", "sast", "owasp", "injection", "ddos", "secrets", "access-control"]
+}

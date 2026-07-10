@@ -27,6 +27,15 @@
       "author": { "name": "Prantik Pratim Medhi" },
       "license": "MIT",
       "keywords": ["skill-router", "ponytail", "caveman", "token-reduction"]
+    },
+    {
+      "name": "codebase-security-audit",
+      "source": "./codebase-security-audit",
+      "description": "Audit a codebase for vulnerabilities and fix them: injection, broken access control / admin exposure, auth weaknesses, secrets, database exposure, PII leakage, XSS, SSRF/CSRF/CORS, deserialization, DoS/DDoS resilience, weak crypto, vulnerable deps. Recon → scan → triage → fix → verify.",
+      "version": "1.0.0",
+      "author": { "name": "Prantik Pratim Medhi" },
+      "license": "MIT",
+      "keywords": ["security", "vulnerability", "audit", "sast", "owasp", "ddos", "secrets"]
     }
   ]
 }

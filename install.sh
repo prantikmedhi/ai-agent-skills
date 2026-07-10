@@ -13,6 +13,7 @@ SKILLS_DIR="${CLAUDE_SKILLS_DIR:-$HOME/.claude/skills}"
 SKILL_PATHS=(
   "fable5-operating-profile:$REPO_DIR/fable5-operating-profile/skills/fable5-operating-profile"
   "auto-skill-finder:$REPO_DIR/auto-skill-finder"
+  "codebase-security-audit:$REPO_DIR/codebase-security-audit/skills/codebase-security-audit"
 )
 
 if [[ "${1:-}" == "--uninstall" ]]; then

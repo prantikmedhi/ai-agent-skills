@@ -1,0 +1,84 @@
+<svg viewBox="0 0 680 580" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="a" markerWidth="7" markerHeight="5" refX="6" refY="2.5" orient="auto">
+      <path d="M0,0 L7,2.5 L0,5 Z" fill="#1a1a1a"/>
+    </marker>
+    <marker id="b" markerWidth="7" markerHeight="5" refX="6" refY="2.5" orient="auto">
+      <path d="M0,0 L7,2.5 L0,5 Z" fill="#888"/>
+    </marker>
+    <style>
+      text { font-family: 'JetBrains Mono', 'Cascadia Code', ui-monospace, monospace; }
+      .label-sm { font-size: 10.5px; fill: #888; }
+      .label-md { font-size: 12px; fill: #1a1a1a; font-weight: 600; }
+      .label-lg { font-size: 13.5px; fill: #1a1a1a; font-weight: 600; }
+      .note { font-size: 10px; fill: #aaa; }
+      .pill { fill: #fff; stroke: #1a1a1a; stroke-width: 1.5; }
+      .box  { fill: #fafafa; stroke: #d4d4d4; stroke-width: 1; }
+      .dm   { fill: #fff; stroke: #1a1a1a; stroke-width: 1.5; }
+      .accent-box { fill: #fff7f5; stroke: #e8634a; stroke-width: 1.5; }
+      .line  { stroke: #1a1a1a; stroke-width: 1.5; fill: none; }
+      .line-dim { stroke: #bbb; stroke-width: 1; fill: none; stroke-dasharray: 4 3; }
+    </style>
+  </defs>
+
+  <rect width="680" height="580" fill="#fff"/>
+
+  <!-- ─── start pill ─── -->
+  <rect x="240" y="18" width="200" height="36" rx="18" class="pill"/>
+  <text x="340" y="41" text-anchor="middle" class="label-lg">every prompt</text>
+
+  <!-- ↓ -->
+  <line x1="340" y1="54" x2="340" y2="84" class="line" marker-end="url(#a)"/>
+
+  <!-- detect box -->
+  <rect x="200" y="88" width="280" height="50" rx="6" class="box"/>
+  <text x="340" y="109" text-anchor="middle" class="label-md">detect_intent.py</text>
+  <text x="340" y="126" text-anchor="middle" class="label-sm">rule-based · no API · &lt;5ms</text>
+
+  <!-- ↓ -->
+  <line x1="340" y1="138" x2="340" y2="166" class="line" marker-end="url(#a)"/>
+
+  <!-- decision diamond -->
+  <polygon points="340,170 420,222 340,274 260,222" class="dm"/>
+  <text x="340" y="217" text-anchor="middle" class="label-md">CODE</text>
+  <text x="340" y="234" text-anchor="middle" class="label-sm">intent?</text>
+
+  <!-- YES → right -->
+  <text x="435" y="215" class="label-sm" fill="#1a1a1a">YES</text>
+  <path d="M420,222 L540,222 L540,306" class="line" marker-end="url(#a)"/>
+
+  <!-- NO → left -->
+  <text x="228" y="215" class="label-sm" fill="#1a1a1a" text-anchor="end">NO</text>
+  <path d="M260,222 L140,222 L140,306" class="line" marker-end="url(#a)"/>
+
+  <!-- caveman-code box (right) -->
+  <rect x="455" y="306" width="180" height="86" rx="6" class="accent-box"/>
+  <text x="545" y="328" text-anchor="middle" class="label-md" fill="#c0441e">ponytail-code</text>
+  <text x="545" y="348" text-anchor="middle" class="note" fill="#e8634a">lazy senior dev</text>
+  <text x="545" y="362" text-anchor="middle" class="note" fill="#e8634a">YAGNI ladder</text>
+  <text x="545" y="376" text-anchor="middle" class="note" fill="#e8634a">shortest diff</text>
+
+  <!-- caveman-chat box (left) -->
+  <rect x="46" y="306" width="180" height="86" rx="6" class="box"/>
+  <text x="136" y="328" text-anchor="middle" class="label-md">caveman-chat</text>
+  <text x="136" y="348" text-anchor="middle" class="note">terse prose only</text>
+  <text x="136" y="362" text-anchor="middle" class="note">no engineering</text>
+  <text x="136" y="376" text-anchor="middle" class="note">methodology</text>
+
+  <!-- converge lines -->
+  <path d="M540,392 L540,432 L420,432" class="line"/>
+  <path d="M136,392 L136,432 L260,432" class="line"/>
+  <line x1="340" y1="432" x2="340" y2="454" class="line" marker-end="url(#a)"/>
+
+  <!-- scan skills -->
+  <rect x="200" y="458" width="280" height="50" rx="6" class="box"/>
+  <text x="340" y="479" text-anchor="middle" class="label-md">scan installed skills</text>
+  <text x="340" y="496" text-anchor="middle" class="label-sm">~/.claude · ~/skills · .cursor · opencode</text>
+
+  <!-- ↓ -->
+  <line x1="340" y1="508" x2="340" y2="528" class="line" marker-end="url(#a)"/>
+
+  <!-- inject + respond -->
+  <rect x="200" y="532" width="280" height="36" rx="18" class="box"/>
+  <text x="340" y="555" text-anchor="middle" class="label-sm">score · compress · inject context → respond</text>
+</svg>

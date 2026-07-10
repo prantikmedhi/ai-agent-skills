@@ -1,0 +1,32 @@
+{
+  "name": "ai-agent-skills",
+  "owner": {
+    "name": "Prantik Pratim Medhi",
+    "email": "prantikpratimmedhi@gmail.com",
+    "url": "https://github.com/prantikmedhi"
+  },
+  "metadata": {
+    "description": "Prantik's AI agent skills: Fable 5 operating profile and auto-skill-finder.",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "fable5-operating-profile",
+      "source": "./fable5-operating-profile",
+      "description": "Run any model with Fable 5's operating profile: interleaved thinking, effort routing, autonomous agency, outcome-first communication, prompt-injection defense, and tool discipline.",
+      "version": "2.0.0",
+      "author": { "name": "Prantik Pratim Medhi" },
+      "license": "MIT",
+      "keywords": ["fable5", "thinking", "effort-routing", "prompt-injection", "agent-security"]
+    },
+    {
+      "name": "auto-skill-finder",
+      "source": "./auto-skill-finder",
+      "description": "Universal AI skill router with dual-mode discipline: ponytail for code, caveman for chat. Auto-routes any prompt to the best installed skill.",
+      "version": "2.2.0",
+      "author": { "name": "Prantik Pratim Medhi" },
+      "license": "MIT",
+      "keywords": ["skill-router", "ponytail", "caveman", "token-reduction"]
+    }
+  ]
+}

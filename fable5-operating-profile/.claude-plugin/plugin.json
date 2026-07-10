@@ -1,0 +1,13 @@
+{
+  "name": "fable5-operating-profile",
+  "version": "2.0.0",
+  "description": "Run any model with Fable 5's operating profile: interleaved thinking, effort routing, autonomous agency, outcome-first communication, prompt-injection defense, and tool discipline.",
+  "author": {
+    "name": "Prantik Pratim Medhi",
+    "url": "https://github.com/prantikmedhi"
+  },
+  "homepage": "https://github.com/prantikmedhi/ai-agent-skills",
+  "repository": "https://github.com/prantikmedhi/ai-agent-skills",
+  "license": "MIT",
+  "keywords": ["fable5", "thinking", "effort-routing", "prompt-injection", "agent-security", "system-prompt"]
+}

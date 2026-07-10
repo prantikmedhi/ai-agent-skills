@@ -1,0 +1,39 @@
+{
+  "name": "auto-skill-finder",
+  "version": "2.2.0",
+  "description": "Universal AI skill router with dual-mode discipline: ponytail for code, caveman for chat. Auto-routes any prompt to the best installed skill. Zero slash commands.",
+  "author": {
+    "name": "Prantik Pratim Medhi",
+    "url": "https://github.com/prantikmedhi"
+  },
+  "homepage": "https://prantikmedhi.github.io/auto-skill-finder/",
+  "repository": "https://github.com/prantikmedhi/auto-skill-finder",
+  "license": "MIT",
+  "keywords": ["skill-router", "ponytail", "caveman", "token-reduction", "productivity"],
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"${CLAUDE_PLUGIN_ROOT}/hooks/SessionStart.js\"",
+            "timeout": 5,
+            "statusMessage": "Loading auto-skill-finder..."
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"${CLAUDE_PLUGIN_ROOT}/hooks/UserPromptSubmit.js\"",
+            "timeout": 10,
+            "statusMessage": "Routing to best skill..."
+          }
+        ]
+      }
+    ]
+  }
+}

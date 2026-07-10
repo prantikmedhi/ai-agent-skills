@@ -42,6 +42,11 @@ STOPWORDS = {
     "your", "you", "my", "me", "i", "we", "our", "its", "do", "does",
 }
 
+# The mode layer (STEP 1) and the router itself are never *task* candidates (STEP 2).
+# They carry intent keywords like "deploy"/"code" as triggers, so without this they
+# hijack task routing (e.g. caveman-code winning over vercel-deploy on a deploy prompt).
+MODE_SKILLS = {"auto-skill-finder", "ponytail-code", "caveman-code", "caveman-chat"}
+
 # ── Skill parsing ──────────────────────────────────────────────────────────────
 
 def parse_skill(path: Path) -> Optional[dict]:
@@ -222,6 +227,8 @@ def route(
 
     candidates: list[dict] = []
     for skill in skills:
+        if skill["name"] in MODE_SKILLS:  # mode layer, not a task candidate
+            continue
         score, reason = score_skill(skill, prompt)
         candidates.append({
             "skill_name": skill["name"],

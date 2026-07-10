@@ -179,11 +179,16 @@ def detect(prompt: str) -> IntentResult:
 
 def main() -> None:
     p = argparse.ArgumentParser(description="Detect code vs chat intent")
-    p.add_argument("prompt", help="Prompt to classify")
+    # accept both positional and --prompt (SKILL.md and skill_finder.py use --prompt)
+    p.add_argument("prompt", nargs="?", help="Prompt to classify")
+    p.add_argument("--prompt", dest="prompt_flag", help="Prompt to classify (flag form)")
     p.add_argument("--json", action="store_true", help="Output JSON")
     args = p.parse_args()
 
-    result = detect(args.prompt)
+    prompt = args.prompt_flag or args.prompt
+    if not prompt:
+        p.error("provide a prompt (positional or --prompt)")
+    result = detect(prompt)
 
     if args.json:
         print(json.dumps(asdict(result), indent=2))

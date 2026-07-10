@@ -69,6 +69,25 @@ From each SKILL.md, extract `name:`, `description:`, `triggers:` from frontmatte
 
 Use `scripts/skill_finder.py --prompt "<prompt>" --json` if Python available.
 
+### Lifecycle intent → skill bundle (surface the whole readiness set, not one skill)
+
+Some prompts name a **development-lifecycle transition**, not a single task. These imply a
+*bundle* of skills the user needs run in order — keyword scoring only sees the literal word
+(e.g. "deploy" → a deploy skill) and misses the rest. When the prompt matches a lifecycle
+phase below, surface and offer to run every matching installed skill in the bundle:
+
+| Prompt signals | Bundle to surface (run in this order) |
+|----------------|----------------------------------------|
+| "ready to deploy", "ship it", "going to production", "MVP done", "launch", "release" | 1. code review (`code-review`, `caveman-review`, `review`) → 2. security audit (`codebase-security-audit`, `security-review`) → 3. tests/verify (`verify`) → 4. deploy (`vercel-deploy`, `run`) → 5. changelog (`changelog-generator`) |
+| "starting a new project", "scaffold", "greenfield" | plan/architecture → `skill-creator` (if extending Claude) → framework skill |
+| "before commit", "pre-commit", "open a PR" | code review → security audit → tests |
+| "audit", "harden", "is this secure" | `codebase-security-audit` → `security-review` |
+
+Match the bundle by *category*, not exact name — run whichever of those skills is actually
+installed, skip the rest. Announce the plan in one line ("Pre-deploy: review → security →
+tests → deploy"), then execute the installed ones in order. This is how a bare "I want to
+deploy my MVP" auto-pulls the code-reviewer and security skills, not just a deploy skill.
+
 ---
 
 ## STEP 3 — SCORE SKILLS

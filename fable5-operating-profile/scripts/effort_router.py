@@ -103,9 +103,26 @@ def route(request: str) -> dict:
     # verification is mandatory once logic/stakes are involved
     verify = think == "deep" or bool(stakes)
 
+    # ---- reasoning effort tier (Fable 5 thinking budget) ----
+    # max = deep + irreversible/high-stakes: adds the devil's-advocate pass
+    if think == "deep" and stakes:
+        reasoning_effort = "max"
+    elif think == "deep":
+        reasoning_effort = "high"
+    elif think == "brief":
+        reasoning_effort = "medium"
+    else:
+        reasoning_effort = "minimal"
+
+    # interleaved thinking: think between tool calls, not just before the answer.
+    # warranted whenever the task is multi-step or touches tools/files/state.
+    interleaved = bool(hard or stakes or artifact_words) or words > 30
+
     return {
         "think": think,
         "effort": effort,
+        "reasoning_effort": reasoning_effort,
+        "interleaved_thinking": interleaved,
         "artifact": artifact,
         "verify_before_commit": verify,
         "signals": {
@@ -122,8 +139,10 @@ def route(request: str) -> dict:
 def _fmt(r: dict) -> str:
     a = r["artifact"]
     art = f"{a['kind']}" if a["warranted"] else "no (prose)"
-    v = "  | verify before commit" if r["verify_before_commit"] else ""
-    return f"think: {r['think']} | effort: {r['effort']} | artifact: {art}{v}"
+    v = " | verify before commit" if r["verify_before_commit"] else ""
+    i = " | interleave" if r["interleaved_thinking"] else ""
+    return (f"think: {r['think']} ({r['reasoning_effort']}) | "
+            f"effort: {r['effort']} | artifact: {art}{i}{v}")
 
 
 def _selftest():
@@ -144,6 +163,12 @@ def _selftest():
     assert route("write up a report on X")["artifact"]["warranted"] is True
     assert route("draw me a chart")["artifact"]["kind"] == "visual"
     assert route("what is 2+2")["artifact"]["warranted"] is False
+    # reasoning effort + interleaving
+    assert route("hello")["reasoning_effort"] == "minimal"
+    assert route("design a distributed cache")["reasoning_effort"] == "high"
+    assert route("delete the production database and redesign the schema")["reasoning_effort"] == "max"
+    assert route("refactor the auth module and deploy to production")["interleaved_thinking"] is True
+    assert route("hello")["interleaved_thinking"] is False
     print("effort_router selftest: OK")
 
 
